@@ -1,0 +1,50 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.18.RELEASE'
+    }
+    ext['thymeleaf.version'] = '3.0.9.RELEASE'
+    ext['thymeleaf-layout-dialect.version'] = '2.1.1'
+    repositories {
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.wxy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+
+}
+
+jar {
+    baseName = 'blog'
+    version = '1.0.0'
+}
+dependencies {
+//    implementation('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+//    runtimeOnly('com.h2database:h2')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.security:spring-security-test')
+    // 添加 MySQL连接驱动 的依赖
+    compile('mysql:mysql-connector-java:6.0.5')
+    // 添加   Thymeleaf Spring Security 依赖，与 Thymeleaf 版本一致都是 3.x
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:3.0.2.RELEASE')
+    // 添加  Apache Commons Lang 依赖
+    compile('org.apache.commons:commons-lang3:3.5')
+    // 添加 Markdown parser 依赖
+    compile('es.nitaur.markdown:txtmark:0.16') 
+}
