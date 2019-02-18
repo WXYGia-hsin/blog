@@ -46,8 +46,8 @@ public class Blog implements Serializable {
     @org.hibernate.annotations.CreationTimestamp// 由数据库自动创建时间
     private Timestamp createTime;
 
-    @Column(name ="reading")
-    private Long reading=0L;//阅读量，访问量
+    @Column(name ="readSize")
+    private Integer  readSize=0;//阅读量，访问量
 
 
 
@@ -128,12 +128,12 @@ public class Blog implements Serializable {
         this.createTime = createTime;
     }
 
-    public Long getReading() {
-        return reading;
+    public Integer  getReadSize() {
+        return readSize;
     }
 
-    public void setReading(Long reading) {
-        this.reading = reading;
+    public void setReadSize(Integer readSize) {
+        this.readSize = readSize;
     }
 
     public Integer getCommentSize() {

@@ -112,9 +112,9 @@
 		                    <p class="card-text" th:text="${blog.summary}">使用 OAuth 2.0 认证的的好处是显然易见的。你只需要用同一个账号密码，就能在各个网站进行访问，而免去了在每个网站都进行注册的繁琐过程。 本文将介绍
 		                        OAuth 2.0 的原理，并基于 Spring Security 和 GitHub 账号，来演示 OAuth 2.0 的认证的过程。</p>
 		                    <div class="card-text">
-		                        	发表于 [[${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}]] <i class="fa fa-eye" aria-hidden="true">[[${blog.reading}]]</i>
-		                        <i class="fa fa-heart-o" aria-hidden="true">[[${blog.likes}]]</i> <i class="fa fa-comment-o"
-		                                                                              aria-hidden="true">[[${blog.comments}]]</i>
+		                        	发表于 [[${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}]] <i class="fa fa-eye" aria-hidden="true">[[${blog.readSize}]]</i>
+		                        <i class="fa fa-heart-o" aria-hidden="true">[[${blog.likeSize}]]</i> <i class="fa fa-comment-o"
+		                                                                              aria-hidden="true">[[${blog.commentSize}]]</i>
 		                    </div>
 		                </div>
 		            </div>

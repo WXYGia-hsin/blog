@@ -20,7 +20,6 @@ public class Comment implements Serializable {
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    @Column(nullable = false) // 映射为字段，值不能为空
     private User user;
 
     @org.hibernate.annotations.CreationTimestamp  // 由数据库自动创建时间

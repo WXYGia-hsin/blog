@@ -52,4 +52,37 @@ $(function() {
 		}).fail(function(res) {});
  	})
  
+ 	// 发布博客
+ 	$("#submitBlog").click(function() {
+ 
+		// 获取 CSRF Token 
+		var csrfToken = $("meta[name='_csrf']").attr("content");
+		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+		
+		$.ajax({
+		    url: '/u/'+ $(this).attr("userName") + '/blogs/edit',
+		    type: 'POST',
+			contentType: "application/json; charset=utf-8",
+		    data:JSON.stringify({"id":$('#blogId').val(), 
+		    	"title": $('#title').val(), 
+		    	"summary": $('#summary').val() , 
+		    	"content": $('#md').val()}),
+			beforeSend: function(request) {
+			    request.setRequestHeader(csrfHeader, csrfToken); // 添加  CSRF Token 
+			},
+			 success: function(data){
+				 if (data.success) {
+					// 成功后，重定向
+					 window.location = data.body;
+				 } else {
+					 toastr.error("error!"+data.message);
+				 }
+				 
+		     },
+		     error : function() {
+		    	 toastr.error("error!");
+		     }
+		})
+ 	})
+ 	
 });
