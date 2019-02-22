@@ -43,8 +43,8 @@ public class UserspaceController {
     @Autowired
     private BlogService blogService;
 
-    @Value("${file.service.url}")
-    private String fileServerUrl;
+//    @Value("${file.service.url}")
+//    private String fileServerUrl;
 
     /**
      * 用户主页
@@ -209,7 +209,7 @@ public class UserspaceController {
      * @param id
      * @return
      */
-    @DeleteMapping("/{username}/blogs/edit/{id}")//!!!
+    @DeleteMapping("/{username}/blogs/{id}")//!!!
     @PreAuthorize("authentication.name.equals(#username)")
     public ResponseEntity<Response> deleteBlog(@PathVariable("username") String username, @PathVariable("id") Long id){
         try {
@@ -250,7 +250,7 @@ public class UserspaceController {
     @GetMapping("/{username}/blogs/edit/{id}")
     public ModelAndView editBlog(@PathVariable("username") String username, @PathVariable("id") Long id, Model model) {
         model.addAttribute("blog", blogService.getBlogById(id));
-        model.addAttribute("fileServerUrl", fileServerUrl);
+//        model.addAttribute("fileServerUrl", fileServerUrl);
         return new ModelAndView("/userspace/blogedit", "blogModel", model);
     }
 

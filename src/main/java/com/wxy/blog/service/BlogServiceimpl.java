@@ -3,6 +3,7 @@ package com.wxy.blog.service;
 import com.wxy.blog.entity.Blog;
 import com.wxy.blog.entity.Comment;
 import com.wxy.blog.entity.User;
+import com.wxy.blog.entity.Vote;
 import com.wxy.blog.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -70,5 +71,24 @@ public class BlogServiceimpl implements BlogService{
         originalBlog.removeComment(commentId);
         blogRepository.save(originalBlog);
 
+    }
+
+    @Override
+    public Blog createVote(Long blogId) {
+        Blog originalBlog=blogRepository.findOne(blogId);
+        User user=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Vote vote=new Vote(user);
+        boolean isExist=originalBlog.addVote(vote);
+        if (isExist){
+            throw new IllegalArgumentException("该用户已经点过赞了");
+        }
+        return blogRepository.save(originalBlog);
+    }
+
+    @Override
+    public void removeVote(Long blogId, Long voteId) {
+        Blog originalBlog=blogRepository.findOne(blogId);
+        originalBlog.removeVote(voteId);
+        blogRepository.save(originalBlog);
     }
 }

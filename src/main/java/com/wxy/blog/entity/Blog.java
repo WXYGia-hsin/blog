@@ -59,10 +59,21 @@ public class Blog implements Serializable {
 
 
 
+    @Column(name = "votesize")
+    private Integer votesize=0;
+
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "blog_comment", joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "comment_id", referencedColumnName = "id"))
     private List<Comment> comments;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name="blog_vote",joinColumns = @JoinColumn(name = "blog_id",referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "vote_id",referencedColumnName = "id"))
+   private  List<Vote> votes;
 
     protected Blog() {
         // TODO Auto-generated constructor stub
@@ -151,9 +162,24 @@ public class Blog implements Serializable {
     public void setLikes(Long likes) {
         this.likes = likes;
     }
+    public Integer getVotesize() {
+        return votesize;
+    }
+
+    public void setVotesize(Integer votesize) {
+        this.votesize = votesize;
+    }
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 
     public void setComments(List<Comment> comments) {
@@ -170,6 +196,10 @@ public class Blog implements Serializable {
         this.commentSize=this.comments.size();
     }
 
+    /**
+     * 删除评论
+     * @param commentId
+     */
     public void removeComment(Long commentId){
         for (int index=0;index<this.comments.size();index++){
             if (comments.get(index).getId() == commentId) {
@@ -179,4 +209,32 @@ public class Blog implements Serializable {
         }
         this.commentSize = this.comments.size();
     }
+
+    /**
+     * 点赞
+     * @return
+     */
+    public boolean addVote(Vote vote){
+        boolean isExist=false;
+        for(int index=0;index<votes.size();index++){
+            if (this.votes.get(index).getUser().getId()==vote.getUser().getId()){
+                isExist=true;
+                break;
+            }
+        }
+        if (!isExist){
+            this.votes.add(vote);
+            this.votesize=this.votes.size();
+        }
+        return  isExist;
+    }
+     public void removeVote(Long blogid){
+        for (int index=0;index<this.votes.size();index++){
+            if (this.votes.get(index).getId()==blogid){
+                this.votes.remove(index);
+                break;
+            }
+        }
+     }
+
 }
